@@ -1,0 +1,47 @@
+<% include head %>
+<% include header %>
+    <div class="row">
+        <h1>Комплекс</h1>
+    </div>
+    <div class="items">
+        <div class="row row-item">
+            <div class="col-md-1">
+                id
+            </div>
+            <div class="col-md">
+                Название
+            </div>
+            <div class="col-md">
+                Наличие тепла
+            </div>
+            <div class="col-md">
+                Наличие резервуара с водой
+            </div>
+        </div>
+    </div>
+    <form method="POST">
+        <% if (typeof complex === 'undefined') { %>
+            <div class="row row-item row-content">
+                <input id="id" name="id" value="" disabled class="input__edit col-md-1" type="text" value="Auto">
+                <input id="name" name="name" value="" class="input__edit col-md" type="text" placeholder="Название">
+                <input id="heating" name="heating" value="" class="input__edit col-md" type="text" placeholder="Наличие тепла">
+                <input id="reservoir" name="reservoir" value="" class="input__edit col-md" type="text" placeholder="Наличие резервуара воды">
+            </div>
+            <div class="row">
+                <input type="submit" id="addSubmitComplex" class="btn btn-success" href="#" value="Добавить">
+            </div>
+
+        <% } else { %>
+            <div class="row row-item row-content">
+                <input id="id" name="id" value="<%= complex['id']%>" disabled class="input__edit col-md-1" type="text" value="Auto">
+                <input id="name" name="name" value="<%= complex['name']%>" class="input__edit col-md" type="text" placeholder="Название">
+                <input id="heating" name="heating" value="<%= complex['heating']%>" class="input__edit col-md" type="text" placeholder="Наличие тепла">
+                <input id="reservoir" name="reservoir" value="<%= complex['reservoir']%>" class="input__edit col-md" type="text" placeholder="Наличие резервуара воды">
+            </div>
+            <div class="row">
+                <a class="btn btn-danger" href="/complex/delete/<%= complex['id'] %>">Удалить</a>
+                <input name="submit" type="submit" id="changeComplex" class="btn btn-default" value="Изменить">
+            </div>
+        <% } %>
+    </form>
+<% include foot %>

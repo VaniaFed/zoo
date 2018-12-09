@@ -39,24 +39,6 @@ const requests = [
     },
 ];
 
-// REST-совместимый API
-
-// add new animal.
-// app.post('/animals', (req, res, next) => {
-//     const url = req.body.url;
-//     console.log(req.body);
-//     read(url, (err, result) => {
-//         if (err || !result) res.status(500).send('Error downloading article');
-//         Article.create(
-//             { title: result.title, content: result.content },
-//             (err, article) => {
-//                 if (err) return next(err);
-//                 res.send('OK');
-//             }
-//         );
-//     });
-// });
-
 app.get('/', (req, res, err) => {
     res.redirect('/animals');
 });
@@ -93,22 +75,86 @@ app.post('/animals/change', (req, res, err) => {
         complex_id = req.body.complex_id;
 
     Animal.change(id, name, dailyFeed, family, habitat, complex_id, () => {
-        res.send('Ok');
+        res.redirect('/animals');
     });
 });
+
+app.post('/animals/create/', (req, res, err) => {
+    const
+        name = req.body.name,
+        dailyFeed = +req.body.dailyFeed,
+        family = req.body.family,
+        habitat = req.body.habitat,
+        complex_id = +req.body.complex_id;
+
+    Animal.add(name, dailyFeed, family, habitat, complex_id, (err) => {
+        res.redirect('/animals');
+    });
+});
+
 app.get('/complexes', (req, res, err) => {
     Complex.all((err, complexes) => {
         res.render('complexes', { complexes: complexes });
     });
 });
 
-app.get('/complexes/:id', (req, res, err) => {
+app.get('/complex/:id', (req, res, err) => {
     const id = req.params.id;
     Complex.find(id, (err, complex) => {
-        res.render('complexes', { complexes: complex });
+        res.render('complex', { complex: complex[0] });
     });
 });
-// check
+
+app.post('/complex/change', (req, res, err) => {
+    let
+        id = req.body.id,
+        name = req.body.name,
+        heating = req.body.heating,
+        reservoir = req.body.reservoir;
+
+    if (heating == 'Да' || heating == 'Yes' || heating == 'да' || heating == 'yes') {
+        heating = 1;
+    }
+    if (reservoir == 'Да' || reservoir == 'Yes' || reservoir == 'да' || reservoir == 'yes') {
+        reservoir = 1;
+    }
+
+    if (heating == 'Нет' || heating == 'No' || heating == 'нет' || heating == 'no') {
+        heating = 0;
+    }
+    if (reservoir == 'Нет' || reservoir == 'No' || reservoir == 'нет' || reservoir == 'no') {
+        reservoir = 0;
+    }
+
+    Complex.change(id, name, heating, reservoir, () => {
+        res.redirect('/complexes');
+    });
+});
+
+app.post('/complex/create/', (req, res, err) => {
+    const
+        name = req.body.name,
+        heating = req.body.heating,
+        reservoir = req.body.reservoir;
+
+    if (heating == 'Да' || heating == 'Yes' || heating == 'да' || heating == 'yes') {
+        heating = 1;
+    }
+    if (reservoir == 'Да' || reservoir == 'Yes' || reservoir == 'да' || reservoir == 'yes') {
+        reservoir = 1;
+    }
+
+    Complex.add(name, heating, reservoir, (err) => {
+        res.redirect('/complexes');
+    });
+});
+
+app.get('/complex/delete/:id', (req, res, err) => {
+    const id = req.params.id;
+    Complex.delete(id, (err) => {
+        res.redirect('/complexes');
+    });
+});
 
 app.get('/request', (req, res, err) => {
     res.render('requests', { requests: requests });
@@ -156,13 +202,6 @@ app.get('/request/:id', (req, res, err) => {
     }
 });
 
-app.get('/complexes/delete/:id', (req, res, err) => {
-    const id = req.params.id;
-    Complex.delete(id, (err) => {
-        res.redirect('/complexes');
-    });
-});
-
 app.listen(port, () => {
     console.log(`Express app available at localhost: ${app.get('port')}`);
 });
@@ -170,18 +209,3 @@ app.listen(port, () => {
 
 module.exports = app;
 module.exports.express = express;
-
-
-/*
-    1. getAllAnimalsOfComplex(0, (err, animals) => {
-        let sumFeed = 0;
-        animals.forEach((animal) => {
-            sumFeed += animal.feed; // или не feed
-        });
-        вывод на стр
-    });
-
-    2. Получить всех животных с именем карликовый гиппопотам где помещение без водоема
-        1. Получить id всех комплексов с резервуаром
-        2. Выбрать всех карликовых гиппопотамов с reservoir_id = id
-*/

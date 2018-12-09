@@ -6,9 +6,20 @@ class Complex {
     static all (cb) {
         db.all('SELECT * FROM complex', cb);
     }
+
     static find(id, cb) {
         db.all('SELECT * FROM complex WHERE id = ?', id, cb);
     }
+
+    static add(name, heating, reservoir, cb) {
+        db.run('INSERT INTO complex VALUES(NULL, ?, ?, ?)', name, heating, reservoir, cb);
+    }
+
+    static change(id, name, heating, reservoir, cb) {
+        db.run(`UPDATE complex SET name = ?, heating = ?, reservoir = ? WHERE id = ?`,
+                name, heating, reservoir, id, cb);
+    }
+
     static delete(id, cb) {
         db.run('DELETE FROM complex WHERE id = ?', id, cb);
     }
@@ -17,16 +28,16 @@ class Animal {
     static all(cb) {
         db.all('SELECT * FROM animals', cb);
     }
+
     static add(name, dailyFeed, family, habitat, complexId, cb) {
-        db.run(`INSERT INTO animals (id, name, dailyFeed, family, habitat, complex_id) 
-                VALUES(NULL, ?, ?, ?, ?, ?)`, name, dailyFeed, family, habitat, complexId, cb);
+        db.run('INSERT INTO animals VALUES(NULL, ?, ?, ?, ?, ?)', name, dailyFeed, family, habitat, complexId, cb);
     }
 
     static change(id, name, dailyFeed, family, habitat, complexId, cb) {
         db.run(`UPDATE animals SET name = ?, dailyFeed = ?, family = ?, habitat = ?, complex_id = ? WHERE id = ?`,
                 name, dailyFeed, family, habitat, complexId, id, cb);
     }
-    
+
     static delete(id, cb) {
         db.run('DELETE FROM animals WHERE id = ?', id, cb);
     }

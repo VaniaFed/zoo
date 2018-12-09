@@ -23,29 +23,29 @@
             id комплекса
         </div>
     </div>
-    <% animals.forEach((animal) => { %>
-        <a href="/animal/<%= animal['id'] %>" class="row row-item row-content">
-            <div class="col-md-1">
-                <%= animal['id'] %>
-            </div>
-            <div class="col-md">
-                <%= animal['name'] %>
-            </div>
-            <div class="col-md">
-                <%= animal['dailyFeed'] %>
-            </div>
-            <div class="col-md">
-                <%= animal['family'] %>
-            </div>
-            <div class="col-md">
-                <%= animal['habitat'] %>
-            </div>
-            <div class="col-md">
-                <%= animal['complex_id'] %>
-            </div>
-        </a>
-    <% }) %>
+        <% animals.forEach((animal) => { %>
+            <a href="/animal/<%= animal['id'] %>" class="row row-item row-content">
+                <div class="col-md-1">
+                    <%= animal['id'] %>
+                </div>
+                <div class="col-md">
+                    <%= animal['name'] %>
+                </div>
+                <div class="col-md">
+                    <%= animal['dailyFeed'] %>
+                </div>
+                <div class="col-md">
+                    <%= animal['family'] %>
+                </div>
+                <div class="col-md">
+                    <%= animal['habitat'] %>
+                </div>
+                <div class="col-md">
+                    <%= animal['complex_id'] %>
+                </div>
+            </a>
+        <% }) %>
     <div class="row">
-        <a id="addAnimal" class="btn btn-danger" href="#">Добавить Животное</a>
+        <a class="btn btn-success" href="/animal/new">Добавить Животное</a>
     </div>
 <% include foot %>

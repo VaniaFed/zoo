@@ -18,7 +18,7 @@
         </div>
     </div>
     <% complexes.forEach((complex) => { %>
-        <a href="/complexes/<%= complex['id'] %>" class="row row-item row-content">
+        <a href="/complex/<%= complex['id'] %>" class="row row-item row-content">
             <div class="col-md-1">
                 <%= complex['id'] %>
             </div>
@@ -41,11 +41,7 @@
             </div>
         </a>
     <% }) %>
-    <% if(complexes.length == 1) {
-        const complex = complexes[0]; 
-    %>
     <div class="row">
-        <a class="btn btn-danger" href="/complexes/delete/<%= complex['id'] %>">Удалить запись</a>
+        <a class="btn btn-success" href="/complex/new">Добавить комплекс</a>
     </div>
-    <% } %>
 <% include foot %>

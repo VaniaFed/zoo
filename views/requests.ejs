@@ -1,0 +1,21 @@
+<% include head %>
+<% include header %>
+    <div class="row">
+        <h1>Запросы</h1>
+    </div>
+    <% for(let i = 0; i <  requests.length; i++) { %>
+        <a href="/request/<%= i %>" class="row row-item row-content">
+            <div class="col-md">
+                <%= requests[i]['text'] %>
+            </div>
+        </a>
+    <% } %>
+    <% if (typeof result !== 'undefined') { %>
+        <div class="row">
+            <h2>Результат</h2>
+        </div>
+        <div class="row">
+            <%= result %>
+        </div>
+    <% } %>
+<% include foot %>

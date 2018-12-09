@@ -1,0 +1,51 @@
+<% include head %>
+<% include header %>
+    <div class="row">
+        <h1>Животные</h1>
+    </div>
+    <div class="row row-item">
+        <div class="col-md-1">
+            id
+        </div>
+        <div class="col-md">
+            Вид
+        </div>
+        <div class="col-md">
+            Потребляет пищи в сутки
+        </div>
+        <div class="col-md">
+            Семейство
+        </div>
+        <div class="col-md">
+            Ариал обитания
+        </div>
+        <div class="col-md">
+            id комплекса
+        </div>
+    </div>
+    <% animals.forEach((animal) => { %>
+        <a href="/animal/<%= animal['id'] %>" class="row row-item row-content">
+            <div class="col-md-1">
+                <%= animal['id'] %>
+            </div>
+            <div class="col-md">
+                <%= animal['name'] %>
+            </div>
+            <div class="col-md">
+                <%= animal['dailyFeed'] %>
+            </div>
+            <div class="col-md">
+                <%= animal['family'] %>
+            </div>
+            <div class="col-md">
+                <%= animal['habitat'] %>
+            </div>
+            <div class="col-md">
+                <%= animal['complex_id'] %>
+            </div>
+        </a>
+    <% }) %>
+    <div class="row">
+        <a id="addAnimal" class="btn btn-danger" href="#">Добавить Животное</a>
+    </div>
+<% include foot %>

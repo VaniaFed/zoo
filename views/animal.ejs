@@ -1,0 +1,40 @@
+<% include head %>
+<% include header %>
+    <div class="row">
+        <h1>Животное</h1>
+    </div>
+    <div class="row row-item">
+        <div class="col-md-1">
+            id
+        </div>
+        <div class="col-md">
+            Вид
+        </div>
+        <div class="col-md">
+            Потребляет пищи в сутки
+        </div>
+        <div class="col-md">
+            Семейство
+        </div>
+        <div class="col-md">
+            Ариал обитания
+        </div>
+        <div class="col-md">
+            id комплекса
+        </div>
+    </div>
+    <form method="POST">
+        <div class="row row-item row-content">
+            <input id="id" name="id" value="<%= animal['id']%>" disabled class="input__edit col-md-1" type="text" value="Auto">
+            <input id="name" name="name" value="<%= animal['name']%>" class="input__edit col-md" type="text" placeholder="Вид">
+            <input id="dailyFeed" name="dailyFeed" value="<%= animal['dailyFeed']%>" class="input__edit col-md" type="text" placeholder="Питание в сутки">
+            <input id="family" name="family" value="<%= animal['family']%>" class="input__edit col-md" type="text" placeholder="Семейство">
+            <input id="habitat" name="habitat" value="<%= animal['habitat']%>" class="input__edit col-md" type="text" placeholder="Ареал обитания">
+            <input id="complex_id" name="complex_id" value="<%= animal['complex_id']%>" class="input__edit col-md" type="text" placeholder="id комплекса">
+        </div>
+        <div class="row">
+            <a class="btn btn-danger" href="/animals/delete/<%= animal['id'] %>">Удалить</a>
+            <input name="submit" type="submit" id="changeAnimal" class="btn btn-default" value="Изменить">
+        </div>
+    </form>
+<% include foot %>

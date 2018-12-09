@@ -1,0 +1,51 @@
+<% include head %>
+<% include header %>
+    <div class="row">
+        <h1>Комплексы</h1>
+    </div>
+    <div class="row row-item">
+        <div class="col-md-1">
+            id
+        </div>
+        <div class="col-md">
+            Название
+        </div>
+        <div class="col-md">
+            Наличие тепла
+        </div>
+        <div class="col-md">
+            Наличие резервуара с водой
+        </div>
+    </div>
+    <% complexes.forEach((complex) => { %>
+        <a href="/complexes/<%= complex['id'] %>" class="row row-item row-content">
+            <div class="col-md-1">
+                <%= complex['id'] %>
+            </div>
+            <div class="col-md">
+                <%= complex['name'] %>
+            </div>
+            <div class="col-md">
+                <% if (complex['heating'] == 1) { %>
+                    Да
+                <% } else {%>
+                    Нет
+                <% } %>
+            </div>
+            <div class="col-md">
+                <% if (complex['reservoir'] == 1) { %>
+                    Да
+                <% } else {%>
+                    Нет
+                <% } %>
+            </div>
+        </a>
+    <% }) %>
+    <% if(complexes.length == 1) {
+        const complex = complexes[0]; 
+    %>
+    <div class="row">
+        <a class="btn btn-danger" href="/complexes/delete/<%= complex['id'] %>">Удалить запись</a>
+    </div>
+    <% } %>
+<% include foot %>

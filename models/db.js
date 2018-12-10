@@ -49,7 +49,7 @@ class Animal {
 
     // для 2 задания
     static getAnimalsByNameWhereReservoirAndHeating(animalName, cb) {
-        db.all('SELECT * FROM animals WHERE name = ? AND complex_id = (SELECT id FROM complex WHERE reservoir = 1 AND heating = 1)', animalName, cb);
+        db.all('SELECT * FROM animals WHERE name = ? AND complex_id = (SELECT id FROM complex WHERE reservoir = 0 AND heating = 1)', animalName, cb);
     }
 
     // для 3 задания

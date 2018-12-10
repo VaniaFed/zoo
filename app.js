@@ -164,7 +164,7 @@ app.get('/request/:id', (req, res, err) => {
     const id = req.params.id;
     switch (+id) {
         case 0: {
-            Animal.getAllAnimalsOfComplex(1, (err, animals) => {
+            Animal.getAllAnimalsOfComplex(9, (err, animals) => {
                 let dailyFeedOfAllTheAnimals = 0;
                 animals.forEach((animal) => {
                     dailyFeedOfAllTheAnimals += animal['dailyFeed'];
@@ -184,7 +184,6 @@ app.get('/request/:id', (req, res, err) => {
         case 2: {
             const family = 'Псовые';
             Animal.getQuantityOfAnimalsByFamily(family, (err, quantityAnimals) => {
-                console.log(quantityAnimals[0]['COUNT(*)'])
                 res.render('requests', {
                     requests: requests, 
                     result:`Общая численность представителей семейства \'псовые\': ${quantityAnimals[0]['COUNT(*)']}`
@@ -194,7 +193,6 @@ app.get('/request/:id', (req, res, err) => {
         }
         case 3: {
             Animal.getAllAnimalsInOneReservoir((err, animals) => {
-                console.log(animals)
                 res.render('animals', { animals: animals });
             });
             break;

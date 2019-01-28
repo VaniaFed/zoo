@@ -46,7 +46,7 @@ app.get('/', (req, res, err) => {
 app.get('/animals', (req, res, err) => {
     Animal.all((err, animals) => {
         if (err) return next(err);
-        res.render('animals', { animals: animals});
+        res.render('animals', { animals: animals });
     });
 });
 
@@ -54,7 +54,7 @@ app.get('/animal/:id', ((req, res, next) => {
     const id = req.params.id;
     Animal.find(id, (err, animal) => {
         if (err) return next(err);
-        res.render('animal', { animal: animal[0]});
+        res.render('animal', { animal: animal[0] });
     });
 }));
 
@@ -112,19 +112,8 @@ app.post('/complex/change', (req, res, err) => {
         heating = req.body.heating,
         reservoir = req.body.reservoir;
 
-    if (heating == 'Да' || heating == 'Yes' || heating == 'да' || heating == 'yes') {
-        heating = 1;
-    }
-    if (reservoir == 'Да' || reservoir == 'Yes' || reservoir == 'да' || reservoir == 'yes') {
-        reservoir = 1;
-    }
-
-    if (heating == 'Нет' || heating == 'No' || heating == 'нет' || heating == 'no') {
-        heating = 0;
-    }
-    if (reservoir == 'Нет' || reservoir == 'No' || reservoir == 'нет' || reservoir == 'no') {
-        reservoir = 0;
-    }
+    heating = heatingToNumber(heating);
+    reservoir = reservoirToNumber(reservoir);
 
     Complex.change(id, name, heating, reservoir, () => {
         res.redirect('/complexes');
@@ -137,17 +126,46 @@ app.post('/complex/create/', (req, res, err) => {
         heating = req.body.heating,
         reservoir = req.body.reservoir;
 
-    if (heating == 'Да' || heating == 'Yes' || heating == 'да' || heating == 'yes') {
-        heating = 1;
-    }
-    if (reservoir == 'Да' || reservoir == 'Yes' || reservoir == 'да' || reservoir == 'yes') {
-        reservoir = 1;
-    }
+    heating = heatingToNumber(heating);
+    reservoir = reservoirToNumber(reservoir);
 
     Complex.add(name, heating, reservoir, (err) => {
         res.redirect('/complexes');
     });
 });
+
+const heatingToNumber = (heating) => {
+    const yes = ['Да', 'Yes'];
+    const no = ['Нет', 'No'];
+    for (let i = 0; i < 2; i++) {
+        if ( equalIgnoreCase(heating, yes[i]) ) {
+            heating = 1;
+        }
+        if ( equalIgnoreCase(heating, no[i]) ) {
+            heating = 0;
+        }
+    }
+    return heating;
+};
+const reservoirToNumber = (reservoir) => {
+    const yes = ['Да', 'Yes'];
+    const no = ['Нет', 'No'];
+    for (let i = 0; i < 2; i++) {
+        if ( equalIgnoreCase(reservoir, yes[i]) ) {
+            reservoir = 1;
+        }
+        if ( equalIgnoreCase(reservoir, no[i]) ) {
+            reservoir = 0;
+        }
+    }
+    return reservoir;
+};
+const equalIgnoreCase = (str1, str2) => {
+    if (str1.toLowerCase() === str2.toLowerCase()) {
+        return true;
+    }
+    return false;
+};
 
 app.get('/complex/delete/:id', (req, res, err) => {
     const id = req.params.id;

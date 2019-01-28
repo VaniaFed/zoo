@@ -120,9 +120,9 @@ app.post('/complex/change', (req, res, err) => {
     });
 });
 
-app.post('/complex/create/', (req, res, err) => {
+app.post('/complex/create', (req, res, err) => {
+    let name = req.body.name;
     const
-        name = req.body.name,
         heating = req.body.heating,
         reservoir = req.body.reservoir;
 

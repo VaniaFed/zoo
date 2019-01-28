@@ -7,7 +7,7 @@ window.onload = function() {
             habitat = $('#habitat').val(),
             complex_id = $('#complex_id').val();
 
-            $.post("/animals/create/", {
+            $.post("/animals/create", {
                 name,
                 dailyFeed,
                 family,
@@ -32,7 +32,7 @@ window.onload = function() {
             reservoir = 1;
         }
 
-        $.post("/complex/create/", {
+        $.post("/complex/create", {
             name,
             heating,
             reservoir
